@@ -5,6 +5,7 @@ import com.resumebuilder.auth_service.dto.LoginRequest;
 import com.resumebuilder.auth_service.dto.RegisterRequest;
 import com.resumebuilder.auth_service.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.register(req));
     }
 
+    @Cacheable("users")
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest req) {
         return ResponseEntity.ok(authService.login(req));
