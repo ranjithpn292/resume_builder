@@ -1,12 +1,21 @@
-version: '3'
+# docker-compose.yml
+
+version: '3.8'
+
 services:
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-  db:
-    image: postgres
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: no
     environment:
-      POSTGRES_DB: resume_db
-      POSTGRES_USER: ranjithpn
-      POSTGRES_PASSWORD:
+      MYSQL_ROOT_PASSWORD: root         # ✅ Required
+      MYSQL_DATABASE: resume_db         # ✅ Optional - Creates DB on startup
+      MYSQL_USER: resumeuser            # ✅ Optional - Creates non-root user
+      MYSQL_PASSWORD: resumepass        # ✅ Required if MYSQL_USER is set
+    ports:
+      - "3306:3306"
+  website:
+    image: nginx
+    ports:
+      - "8081:80"
+    restart: no
